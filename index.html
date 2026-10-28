@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Budget Phone Finder</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--text:#1d2420;--muted:#5f6b64;--accent:#1f7a4d;--line:#dde2dc;--chip:#e6f2ea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121613;--card:#1b211d;--text:#eef2ee;--muted:#9aa89f;--accent:#4cc786;--line:#2b342e;--chip:#1f3328;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121613;--card:#1b211d;--text:#eef2ee;--muted:#9aa89f;--accent:#4cc786;--line:#2b342e;--chip:#1f3328;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.9rem;margin:8px 0 4px;letter-spacing:-.02em}
+h2{font-size:1.2rem;margin:36px 0 12px}
+.sub{color:var(--muted);margin:0 0 20px}
+.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.controls{display:grid;gap:14px}
+label{font-weight:600;display:flex;justify-content:space-between}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);padding:7px 12px;border-radius:99px;font-size:.9rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.list{display:grid;gap:12px;margin-top:16px}
+.card h3{margin:0;font-size:1.05rem;display:flex;justify-content:space-between;gap:8px}
+.price{color:var(--accent);white-space:nowrap}
+.tag{display:inline-block;background:var(--chip);color:var(--accent);font-size:.78rem;padding:2px 9px;border-radius:99px;font-weight:600;margin:6px 0}
+.card p{margin:4px 0;color:var(--muted);font-size:.93rem}
+.card .pro{color:var(--text)}
+.empty{color:var(--muted);text-align:center;padding:20px}
+.shops{display:grid;gap:10px}
+.shop{display:flex;flex-direction:column}
+.shop b{font-size:1rem}
+.shop span{color:var(--muted);font-size:.92rem}
+ul.tips{padding-left:20px;margin:0}
+ul.tips li{margin:8px 0}
+.note{font-size:.82rem;color:var(--muted);margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Budget Phone Finder</h1>
+<p class="sub">Good phones that don’t cost a fortune: what to pick, where to buy, and what to pay.</p>
+
+<div class="panel controls">
+  <div>
+    <label for="max"><span>Max budget</span><span id="maxv">$400</span></label>
+    <input type="range" id="max" min="150" max="500" step="10" value="400">
+  </div>
+  <div>
+    <div style="font-weight:600;margin-bottom:8px">I care most about</div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<div class="list" id="list"></div>
+
+<h2>Where to buy</h2>
+<div class="shops card">
+  <div class="shop"><b>Manufacturer stores</b><span>Samsung, Google, Motorola and Nothing run frequent sales and trade-in deals.</span></div>
+  <div class="shop"><b>Amazon, Best Buy, Walmart</b><span>Best for unlocked models. Prices drop often, especially around Prime Day and Black Friday.</span></div>
+  <div class="shop"><b>Swappa, Back Market</b><span>Refurbished or used phones. A one-year-old midrange phone often beats a new cheap one.</span></div>
+  <div class="shop"><b>Prepaid carriers</b><span>Mint, Visible, Cricket and Metro sell cheap phones and sometimes bundle them with plans.</span></div>
+</div>
+
+<h2>How to avoid a bad cheap phone</h2>
+<div class="card">
+<ul class="tips">
+  <li><b>Check software updates.</b> 4 or more years of security updates is the real value marker.</li>
+  <li><b>Look for an AMOLED or 90/120 Hz screen.</b> It makes a cheap phone feel far nicer.</li>
+  <li><b>Get at least 128 GB storage and 6 GB RAM.</b> Less will feel slow within a year.</li>
+  <li><b>Buy unlocked</b> so you can pick any carrier and any deal.</li>
+  <li><b>Wait for sales.</b> Many of these drop $50 to $100 within months of release.</li>
+</ul>
+</div>
+
+<p class="note">Prices are typical US street prices and change often, so always check the current price before buying. Picks are based on general reputation for value, not a fresh price scan.</p>
+</div>
+
+<script>
+var phones=[
+{n:"Moto G (2025)",p:180,hi:200,t:"Cheapest decent",f:["value"],d:"Smooth screen, clean software, solid for calls, maps and social apps.",c:"Average camera and only a couple of years of updates."},
+{n:"Samsung Galaxy A16 5G",p:200,hi:250,t:"Best updates under $250",f:["updates","value"],d:"Bright AMOLED screen and up to 6 years of updates, which is rare at this price.",c:"Performance is basic."},
+{n:"Moto G Power 5G (2025)",p:300,hi:300,t:"Best battery",f:["battery"],d:"Easily lasts a day and a half or more, with wireless-free simplicity and a clean look.",c:"Camera is just okay."},
+{n:"Samsung Galaxy A36 5G",p:330,hi:400,t:"Best all-rounder",f:["updates","camera","value"],d:"Great screen, water resistance, a capable camera and years of updates.",c:"Often cheaper on sale than list."},
+{n:"Nothing Phone (3a)",p:380,hi:380,t:"Best design and speed",f:["speed","camera"],d:"Fast, distinctive, with a versatile camera setup and clean software.",c:"Limited US carrier support."},
+{n:"Google Pixel 9a",p:450,hi:500,t:"Best camera",f:["camera","updates"],d:"Top-tier photos, 7 years of updates and a clean, smart Android experience.",c:"Pricey for a budget list, but drops on sale."},
+{n:"Refurbished Pixel 8a",p:260,hi:320,t:"Best used deal",f:["camera","value","updates"],d:"Flagship-style camera and long updates for far less than new.",c:"Buy from a seller with a return policy."},
+{n:"Poco X7 Pro / Redmi Note 14 Pro",p:260,hi:350,t:"Most power per dollar",f:["speed","battery","value"],d:"Very fast, huge batteries and fast charging. Popular outside the US.",c:"Limited US network bands and fewer updates."}
+];
+var focus="all",cats=[["all","Anything"],["value","Lowest price"],["camera","Camera"],["battery","Battery"],["speed","Speed"],["updates","Long updates"]];
+var chips=document.getElementById("chips"),max=document.getElementById("max"),mv=document.getElementById("maxv"),list=document.getElementById("list");
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function render(){
+  var m=+max.value;mv.textContent="$"+m;
+  chips.innerHTML="";
+  cats.forEach(function(c){var b=document.createElement("button");b.className="chip";b.textContent=c[1];b.setAttribute("aria-pressed",focus===c[0]);b.onclick=function(){focus=c[0];render()};chips.appendChild(b)});
+  var r=phones.filter(function(x){return x.p<=m&&(focus==="all"||x.f.indexOf(focus)>-1)}).sort(function(a,b){return a.p-b.p});
+  if(!r.length){list.innerHTML='<div class="empty">Nothing matches. Try raising your budget or picking another focus.</div>';return}
+  list.innerHTML=r.map(function(x){
+    var price=x.hi>x.p?"$"+x.p+"–$"+x.hi:"$"+x.p;
+    return '<div class="card"><h3><span>'+esc(x.n)+'</span><span class="price">'+price+'</span></h3><span class="tag">'+esc(x.t)+'</span><p class="pro">'+esc(x.d)+'</p><p>Watch out: '+esc(x.c)+'</p></div>'
+  }).join("");
+}
+max.oninput=render;render();
+</script>
+</body>
+</html>
